@@ -1,0 +1,54 @@
+body {
+    overflow: hidden;
+}
+
+#video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+    width: 100%;
+}
+
+#title {
+    width: 370px;
+    height: 80px;
+    background: hsl(0deg 0% 13%);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 40px;
+    margin: 0;
+    position: absolute;
+    top: 7px;
+    left: 7px;
+}
+
+.buttons-wrapper {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.buttons-wrapper button {
+    padding: 5px 15px;
+    font-size: 20px;
+    margin-right: 5px;
+}
+
+#offBtn {
+    display: none;
+}
+
+#microphone {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    height: 70px;
+    cursor: pointer;
+}
