@@ -10,14 +10,14 @@
 };
 
 firebase.initializeApp(firebaseConfig);
-
+let lightsStatus;
 let db = firebase.database().ref('Lights');
 db.on('value', (status) => {
-    let obj = status.val();
-    if (obj.status == TURN_LIGHTS_OFF) {
+     lightsStatus = status.val().status;
+    if (lightsStatus == TURN_LIGHTS_OFF) {
         turnLightsOff();
     }
-    else if (obj.status == TURN_LIGHTS_ON) {
+    else if (lightsStatus == TURN_LIGHTS_ON) {
         turnLightsOn();
     }
 });
@@ -50,23 +50,29 @@ var recognition = new SpeechRecognition();
 var speechRecognitionList = new SpeechGrammarList();
 speechRecognitionList.addFromString(grammar, 1);
 recognition.grammars = speechRecognitionList;
-recognition.continuous = false;
+recognition.continuous = true;
 recognition.lang = 'en-US';
 recognition.interimResults = false;
 recognition.maxAlternatives = 1;
 
 recognition.onresult = function (event) {
-    var voiceCommands = event.results[0][0].transcript;
+    var voiceCommands = event.results[event.results.length - 1][0].transcript;
+    // var voiceCommands = event.results[0][0].transcript;
     voiceCommands = voiceCommands.trim();
     voiceCommand.innerHTML = voiceCommands;
 
-    if (voiceCommands == TURN_LIGHTS_OFF) {
+    debugger
+    if(voiceCommands == lightsStatus && lightsStatus == TURN_LIGHTS_OFF) {
+        readOutLoud("lights are alredy off");
+    }
+    else if(voiceCommands == lightsStatus && lightsStatus == TURN_LIGHTS_ON) {
+        readOutLoud("lights are alredy on");
+    }
+    else if (voiceCommands == TURN_LIGHTS_OFF) {
         sendData(TURN_LIGHTS_OFF);
-        readOutLoud("turning lights off");
     }
     else if (voiceCommands == TURN_LIGHTS_ON) {
         sendData(TURN_LIGHTS_ON);
-        readOutLoud("turning lights on");
     }
 }
 
@@ -84,12 +90,14 @@ const time = document.getElementById('time');
 let video = document.getElementById('video');
 
 function turnLightsOn() {
+    readOutLoud("turning lights on");
     video.setAttribute('src', 'media/on.mp4');
     onBtn.style.display = "none";
     offBtn.style.display = "block";
 }
 
 function turnLightsOff() {
+    readOutLoud("turning lights off");
     video.setAttribute('src', 'media/off.mp4');
     setTimeout(() => {
         video.setAttribute('src', 'media/default.mp4');
