@@ -66,6 +66,7 @@ body {
 }
 
 table {
+    display: none;
     position: absolute;
     top: 48%;
     left: 46%;

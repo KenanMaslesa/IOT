@@ -130,8 +130,10 @@ function readOutLoud(message) {
 }
 
 microphone.addEventListener("click", () => {
-  recognition.start();
-  readOutLoud("I'm listening");
+    readOutLoud("I'm listening");
+    setTimeout(()=> {
+        recognition.start();
+    }, 2000)
 });
 
 offBtn.addEventListener("click", () => {
