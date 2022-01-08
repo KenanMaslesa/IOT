@@ -65,6 +65,19 @@ body {
     color: white;
 }
 
+table {
+    position: absolute;
+    top: 48%;
+    left: 46%;
+    background: white;
+}
+
+table td {
+        padding: 5px;
+        border: 1px solid;
+        text-align: center;
+}
+
 @media(max-width: 768px) {
     #title {
         display: none;
