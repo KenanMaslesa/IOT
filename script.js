@@ -11,6 +11,7 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+
 let lightsStatus;
 let db = firebase.database().ref("Lights");
 db.on("value", (status) => {
@@ -21,15 +22,6 @@ db.on("value", (status) => {
     turnLightsOn();
   }
 });
-
-function getCurrentTime() {
-  const t = new Date();
-  const hours = t.getHours();
-  const minutes = t.getMinutes();
-  const seconds = t.getSeconds();
-
-  return `${hours}:${minutes}:${seconds}`;
-}
 
 sendData = (command) => {
   var table = document.querySelector("table").getElementsByTagName("tbody")[0];
@@ -60,13 +52,7 @@ var SpeechRecognitionEvent =
 const TURN_LIGHTS_ON = "on";
 const TURN_LIGHTS_OFF = "off";
 
-var grammar =
-  "#JSGF V1.0; grammar colors; public <color> = turn lights on | turn lights off ;";
-
 var recognition = new SpeechRecognition();
-var speechRecognitionList = new SpeechGrammarList();
-speechRecognitionList.addFromString(grammar, 1);
-recognition.grammars = speechRecognitionList;
 recognition.continuous = true;
 recognition.lang = "en-US";
 recognition.interimResults = false;
@@ -78,7 +64,6 @@ recognition.onresult = function (event) {
   voiceCommands = voiceCommands.trim();
   voiceCommand.innerHTML = voiceCommands;
 
-  debugger;
   if (voiceCommands == lightsStatus && lightsStatus == TURN_LIGHTS_OFF) {
     readOutLoud("lights are alredy off");
   } else if (voiceCommands == lightsStatus && lightsStatus == TURN_LIGHTS_ON) {
@@ -100,7 +85,7 @@ const onBtn = document.getElementById("onBtn");
 const microphone = document.getElementById("microphone");
 const voiceCommand = document.getElementById("voiceCommand");
 const time = document.getElementById("time");
-let video = document.getElementById("video");
+const video = document.getElementById("video");
 
 function turnLightsOn() {
   readOutLoud("turning lights on");
@@ -130,10 +115,10 @@ function readOutLoud(message) {
 }
 
 microphone.addEventListener("click", () => {
-    readOutLoud("I'm listening");
-    setTimeout(()=> {
-        recognition.start();
-    }, 2000)
+  readOutLoud("I'm listening");
+  setTimeout(() => {
+    recognition.start();
+  }, 1800);
 });
 
 offBtn.addEventListener("click", () => {
@@ -143,3 +128,12 @@ offBtn.addEventListener("click", () => {
 onBtn.addEventListener("click", () => {
   sendData(TURN_LIGHTS_ON);
 });
+
+function getCurrentTime() {
+  const t = new Date();
+  const hours = t.getHours();
+  const minutes = t.getMinutes();
+  const seconds = t.getSeconds();
+
+  return `${hours}:${minutes}:${seconds}`;
+}
