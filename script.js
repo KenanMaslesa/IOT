@@ -41,10 +41,7 @@ sendData = (command) => {
 // FIREBASE END
 
 //  VOICE RECOGNITION START
-let SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
-let SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
-let SpeechRecognitionEvent =
-  SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
+var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
 
 const TURN_LIGHTS_ON = "on";
 const TURN_LIGHTS_OFF = "off";
@@ -101,7 +98,7 @@ function turnLightsOff() {
   }, 2300);
 }
 
-// READ TEXT
+// READ TEXT START
 let speech = new SpeechSynthesisUtterance();
 function readOutLoud(message) {
   speech.text = message;
@@ -110,6 +107,7 @@ function readOutLoud(message) {
   speech.pitch = 1;
   window.speechSynthesis.speak(speech);
 }
+// READ TEXT END
 
 microphone.addEventListener("click", () => {
   readOutLoud("I'm listening");
