@@ -52,3 +52,21 @@ body {
     height: 70px;
     cursor: pointer;
 }
+
+#voiceCommand {
+    position: absolute;
+    top: 50px;
+    right: 120px;
+    height: 70px;
+    cursor: pointer;
+    font-size: 20px;
+    width: 250px;
+    text-align: center;
+    color: white;
+}
+
+@media(max-width: 768px) {
+    #title {
+        display: none;
+    }
+}

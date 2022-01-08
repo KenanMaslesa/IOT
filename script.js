@@ -50,20 +50,21 @@ var recognition = new SpeechRecognition();
 var speechRecognitionList = new SpeechGrammarList();
 speechRecognitionList.addFromString(grammar, 1);
 recognition.grammars = speechRecognitionList;
-recognition.continuous = true;
+recognition.continuous = false;
 recognition.lang = 'en-US';
 recognition.interimResults = false;
 recognition.maxAlternatives = 1;
 
 recognition.onresult = function (event) {
-    var voiceCommand = event.results[event.results.length - 1][0].transcript;
-    voiceCommand = voiceCommand.trim();
+    var voiceCommands = event.results[0][0].transcript;
+    voiceCommands = voiceCommands.trim();
+    voiceCommand.innerHTML = voiceCommands;
 
-    if (voiceCommand == TURN_LIGHTS_OFF) {
+    if (voiceCommands == TURN_LIGHTS_OFF) {
         sendData(TURN_LIGHTS_OFF);
         readOutLoud("turning lights off");
     }
-    else if (voiceCommand == TURN_LIGHTS_ON) {
+    else if (voiceCommands == TURN_LIGHTS_ON) {
         sendData(TURN_LIGHTS_ON);
         readOutLoud("turning lights on");
     }
@@ -78,6 +79,7 @@ recognition.onspeechend = function () {
 const offBtn = document.getElementById('offBtn');
 const onBtn = document.getElementById('onBtn');
 const microphone = document.getElementById('microphone');
+const voiceCommand = document.getElementById('voiceCommand');
 const time = document.getElementById('time');
 let video = document.getElementById('video');
 
@@ -98,8 +100,8 @@ function turnLightsOff() {
 }
 
 // READ TEXT
+let speech = new SpeechSynthesisUtterance();
 function readOutLoud(message) {
-    var speech = new SpeechSynthesisUtterance();
     speech.text = message;
     speech.volume = 1;
     speech.rate = 1;
@@ -109,7 +111,7 @@ function readOutLoud(message) {
 
 microphone.addEventListener('click', () => {
     recognition.start();
-    readOutLoud("what do you want me to do?");
+    readOutLoud("I'm listening");
 });
 
 offBtn.addEventListener('click', () => {
