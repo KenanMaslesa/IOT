@@ -76,26 +76,19 @@ recognition.onspeechend = function () {
 const offBtn = document.getElementById('offBtn');
 const onBtn = document.getElementById('onBtn');
 const microphone = document.getElementById('microphone');
+const time = document.getElementById('time');
 let video = document.getElementById('video');
 
-offBtn.addEventListener('click', () => {
-    sendData(TURN_LIGHTS_OFF);
-});
-
-onBtn.addEventListener('click', () => {
-    sendData(TURN_LIGHTS_ON);
-});
-
 function turnLightsOn() {
-    readOutLoud("turning lights on");
     video.setAttribute('src', 'media/on.mp4');
+    readOutLoud("turning lights on");
     onBtn.style.display = "none";
     offBtn.style.display = "block";
 }
 
 function turnLightsOff() {
-    readOutLoud("turning lights off");
     video.setAttribute('src', 'media/off.mp4');
+    readOutLoud("turning lights off");
     setTimeout(() => {
         video.setAttribute('src', 'media/default.mp4');
         onBtn.style.display = "block";
@@ -117,4 +110,12 @@ function readOutLoud(message) {
 microphone.addEventListener('click', () => {
     recognition.start();
     readOutLoud("what do you want me to do?");
+});
+
+offBtn.addEventListener('click', () => {
+    sendData(TURN_LIGHTS_OFF);
+});
+
+onBtn.addEventListener('click', () => {
+    sendData(TURN_LIGHTS_ON);
 });
