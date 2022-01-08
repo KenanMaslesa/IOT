@@ -61,9 +61,11 @@ recognition.onresult = function (event) {
 
     if (voiceCommand == TURN_LIGHTS_OFF) {
         sendData(TURN_LIGHTS_OFF);
+        readOutLoud("turning lights off");
     }
     else if (voiceCommand == TURN_LIGHTS_ON) {
         sendData(TURN_LIGHTS_ON);
+        readOutLoud("turning lights on");
     }
 }
 
@@ -81,14 +83,12 @@ let video = document.getElementById('video');
 
 function turnLightsOn() {
     video.setAttribute('src', 'media/on.mp4');
-    readOutLoud("turning lights on");
     onBtn.style.display = "none";
     offBtn.style.display = "block";
 }
 
 function turnLightsOff() {
     video.setAttribute('src', 'media/off.mp4');
-    readOutLoud("turning lights off");
     setTimeout(() => {
         video.setAttribute('src', 'media/default.mp4');
         onBtn.style.display = "block";
