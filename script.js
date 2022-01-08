@@ -24,10 +24,7 @@ db.on("value", (status) => {
 });
 
 sendData = (command) => {
-  var table = document.querySelector("table").getElementsByTagName("tbody")[0];
-  var newRow = table.insertRow(table.rows.length);
-  let htmlTemplate = `<tr><td>${getCurrentTime()}</td><td>${command}</td></tr>`;
-  newRow.innerHTML = htmlTemplate;
+  addNewTableRow(command);
   db.set(
     {
       status: command,
@@ -44,23 +41,23 @@ sendData = (command) => {
 // FIREBASE END
 
 //  VOICE RECOGNITION START
-var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
-var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
-var SpeechRecognitionEvent =
+let SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+let SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
+let SpeechRecognitionEvent =
   SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
 
 const TURN_LIGHTS_ON = "on";
 const TURN_LIGHTS_OFF = "off";
 
-var recognition = new SpeechRecognition();
+let recognition = new SpeechRecognition();
 recognition.continuous = true;
 recognition.lang = "en-US";
 recognition.interimResults = false;
 recognition.maxAlternatives = 1;
 
 recognition.onresult = function (event) {
-  var voiceCommands = event.results[event.results.length - 1][0].transcript;
-  // var voiceCommands = event.results[0][0].transcript;
+  let voiceCommands = event.results[event.results.length - 1][0].transcript;
+  // let voiceCommands = event.results[0][0].transcript;
   voiceCommands = voiceCommands.trim();
   voiceCommand.innerHTML = voiceCommands;
 
@@ -136,4 +133,11 @@ function getCurrentTime() {
   const seconds = t.getSeconds();
 
   return `${hours}:${minutes}:${seconds}`;
+}
+
+function addNewTableRow(command) {
+  let table = document.querySelector("table").getElementsByTagName("tbody")[0];
+  let newRow = table.insertRow(table.rows.length);
+  let htmlTemplate = `<tr><td>${getCurrentTime()}</td><td>${command}</td></tr>`;
+  newRow.innerHTML = htmlTemplate;
 }
